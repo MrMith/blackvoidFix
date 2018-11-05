@@ -17,7 +17,7 @@ namespace BlackVoidFix
 
 		public void OnPlayerDie(PlayerDeathEvent ev)
 		{
-			if (ev.DamageTypeVar == Smod2.API.DamageType.FLYING && Smod2.PluginManager.Manager.Server.Round.Duration <= plugin.GetConfigInt("void_secondstorespawn"))
+			if (ev.DamageTypeVar == Smod2.API.DamageType.FLYING || ev.DamageTypeVar == Smod2.API.DamageType.NONE && Smod2.PluginManager.Manager.Server.Round.Duration <= plugin.GetConfigInt("void_secondstorespawn"))
 			{
 				VoidMain.checkIPIfDisconnected[ev.Player.IpAddress] = true;
 				VoidMain.checkIPForRole[ev.Player.IpAddress] = ev.Player.TeamRole.Role;
