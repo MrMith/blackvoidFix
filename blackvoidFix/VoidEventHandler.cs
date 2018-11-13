@@ -19,18 +19,27 @@ namespace BlackVoidFix
 		{
 			if (ev.DamageTypeVar == Smod2.API.DamageType.FLYING || ev.DamageTypeVar == Smod2.API.DamageType.NONE && Smod2.PluginManager.Manager.Server.Round.Duration <= plugin.GetConfigInt("void_secondstorespawn"))
 			{
-				VoidMain.checkSteamIdIfDisconnected[ev.Player.IpAddress] = true;
-				VoidMain.checkSteamIdForRole[ev.Player.IpAddress] = ev.Player.TeamRole.Role;
-				ev.Player.Disconnect("Seems like you experienced a glitch! To reconnect fast Go to Play -> Join Game -> Direct Connect -> Connect. Don't put anything in the IP field.");
-			} // Above can have some issues and wasn't consistant when I tried to access it, for example instead of showing direct connect it would skip to server browser :(
+				if (VoidMain.checkSteamIdIfDisconnected.TryGetValue(ev.Player.SteamId, out value))
+				{
+					if(value)
+					{
+						return;
+					}
+				}
+				VoidMain.checkSteamIdIfDisconnected[ev.Player.SteamId] = true;
+				VoidMain.checkSteamIdForRole[ev.Player.SteamId] = ev.Player.TeamRole.Role;
+				ev.Player.Disconnect("Seems like you experienced a glitch! To reconnect fast Go to Play -> Join Game -> Back (bottom right) -> Direct Connect -> Connect. Don't put anything in the IP field.");
+			}// Above can have some issues and wasn't consistant when I tried to access it, for example instead of showing direct connect it would skip to server browser :(
+
 		}
 
 		public void OnPlayerJoin(PlayerJoinEvent ev)
 		{
-			if (VoidMain.checkSteamIdIfDisconnected.TryGetValue(ev.Player.IpAddress, out value))
+			if (VoidMain.checkSteamIdIfDisconnected.TryGetValue(ev.Player.SteamId, out value))
 			{
-				ev.Player.ChangeRole(VoidMain.checkSteamIdForRole[ev.Player.IpAddress]);
-				VoidMain.checkSteamIdForRole.Remove(ev.Player.IpAddress);
+				ev.Player.ChangeRole(VoidMain.checkSteamIdForRole[ev.Player.SteamId]);
+				VoidMain.checkSteamIdForRole.Remove(ev.Player.SteamId);
+				VoidMain.checkSteamIdIfDisconnected.Remove(ev.Player.SteamId);
 			}
 		}
 

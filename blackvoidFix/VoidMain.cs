@@ -9,7 +9,7 @@ namespace BlackVoidFix
 		name = "blackvoidFix",
 		description = "Respawns people when they die to anticheat at the start of the round because of a glitch with map loading.",
 		id = "mith.blackvoidfix",
-		version = "1.01",
+		version = "1.02",
 		SmodMajor = 3,
 		SmodMinor = 1,
 		SmodRevision = 21
