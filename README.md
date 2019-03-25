@@ -11,3 +11,11 @@ Put blackvoidFix.dll under the release tab into sm_plugins folder.
 | Config Option              | Value Type      | Default Value | Description |
 |   :---:                    |     :---:       |    :---:      |    :---:    |
 | void_secondstorespawn      | Int             | 5             | How many seconds till this plugin stops respawning people. |
+
+
+## Commands
+
+| Command(s)                 | Value Type      | Description                              |
+|   :---:                    |     :---:       |    :---:                                 |
+| void_version               | N/A             | Get the version of this plugin           |
+| void_disable               | N/A             | Disables the entire blackvoidFix plugin.    |

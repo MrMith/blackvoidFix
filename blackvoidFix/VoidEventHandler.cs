@@ -37,9 +37,12 @@ namespace BlackVoidFix
 		{
 			if (VoidMain.checkSteamIdIfDisconnected.TryGetValue(ev.Player.SteamId, out value))
 			{
-				ev.Player.ChangeRole(VoidMain.checkSteamIdForRole[ev.Player.SteamId]);
-				VoidMain.checkSteamIdForRole.Remove(ev.Player.SteamId);
-				VoidMain.checkSteamIdIfDisconnected.Remove(ev.Player.SteamId);
+				if(value)
+				{
+					ev.Player.ChangeRole(VoidMain.checkSteamIdForRole[ev.Player.SteamId]);
+					VoidMain.checkSteamIdForRole.Remove(ev.Player.SteamId);
+					VoidMain.checkSteamIdIfDisconnected.Remove(ev.Player.SteamId);
+				}
 			}
 		}
 
