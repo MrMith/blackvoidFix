@@ -9,9 +9,9 @@ namespace BlackVoidFix
 		name = "blackvoidFix",
 		description = "Respawns people when they die to anticheat at the start of the round because of a glitch with map loading.",
 		id = "mith.blackvoidfix",
-		version = "1.03",
+		version = "1.04",
 		SmodMajor = 3,
-		SmodMinor = 3,
+		SmodMinor = 4,
 		SmodRevision = 0
 		)]
 	class VoidMain : Plugin
@@ -35,7 +35,8 @@ namespace BlackVoidFix
 			this.AddCommand("void_disable", new BlackVoidDisable(this));
 			this.AddEventHandlers(new VoidEventHandler(this));
 
-			this.AddConfig(new Smod2.Config.ConfigSetting("void_secondstorespawn", 5, Smod2.Config.SettingType.NUMERIC, true, "How many seconds till you stop respawning people."));
+			this.AddConfig(new Smod2.Config.ConfigSetting("void_secondstorespawn", 5, true, "How many seconds till you stop respawning people."));
+			this.AddConfig(new Smod2.Config.ConfigSetting("void_disable", false, true, "Enable or disable blackvoidFix."));
 		}
 	}
 }

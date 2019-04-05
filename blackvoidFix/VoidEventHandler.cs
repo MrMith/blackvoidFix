@@ -4,9 +4,11 @@ using Smod2.Events;
 
 namespace BlackVoidFix
 {
-	class VoidEventHandler : IEventHandlerPlayerDie, IEventHandlerPlayerJoin, IEventHandlerRoundEnd
+	class VoidEventHandler : IEventHandlerPlayerDie, IEventHandlerPlayerJoin, IEventHandlerRoundEnd, IEventHandlerWaitingForPlayers
 	{
 		private readonly Plugin plugin;
+
+		int void_SecondsToRespawn = 0;
 
 		bool value = false;
 
@@ -17,7 +19,7 @@ namespace BlackVoidFix
 
 		public void OnPlayerDie(PlayerDeathEvent ev)
 		{
-			if (ev.DamageTypeVar == Smod2.API.DamageType.FLYING || ev.DamageTypeVar == Smod2.API.DamageType.NONE && Smod2.PluginManager.Manager.Server.Round.Duration <= plugin.GetConfigInt("void_secondstorespawn"))
+			if (ev.DamageTypeVar == Smod2.API.DamageType.FLYING || ev.DamageTypeVar == Smod2.API.DamageType.NONE && Smod2.PluginManager.Manager.Server.Round.Duration <= void_SecondsToRespawn)
 			{
 				if (VoidMain.checkSteamIdIfDisconnected.TryGetValue(ev.Player.SteamId, out value))
 				{
@@ -50,6 +52,15 @@ namespace BlackVoidFix
 		{
 			VoidMain.checkSteamIdForRole.Clear();
 			VoidMain.checkSteamIdIfDisconnected.Clear();
+		}
+
+		public void OnWaitingForPlayers(WaitingForPlayersEvent ev)
+		{
+			if(plugin.GetConfigBool("void_disable"))
+			{
+				plugin.PluginManager.DisablePlugin(plugin);
+			}
+			void_SecondsToRespawn = plugin.GetConfigInt("void_secondstorespawn");
 		}
 	}
 }
